@@ -7,10 +7,10 @@ interface ExploreProps {
 
 export const Explore: React.FC<ExploreProps> = ({ isQuietMode }) => {
   return (
-    <div className="w-full min-h-full p-1 bg-calm-bg">
+    <div className="w-full min-h-full p-1 bg-calm-bg dark:bg-stone-950 transition-colors duration-500">
       {/* Calm Search Bar */}
       <div className="px-3 pb-4 pt-2">
-        <div className="w-full h-10 bg-stone-100 rounded-xl flex items-center px-4 text-calm-subtext">
+        <div className="w-full h-10 bg-stone-100 dark:bg-stone-900 rounded-xl flex items-center px-4 text-calm-subtext dark:text-stone-500 transition-colors">
             <span className="text-sm">Search for inspiration...</span>
         </div>
       </div>
@@ -18,7 +18,7 @@ export const Explore: React.FC<ExploreProps> = ({ isQuietMode }) => {
       {/* Categories */}
       <div className="flex gap-2 overflow-x-auto px-4 pb-4 no-scrollbar">
         {['Nature', 'Minimalism', 'Architecture', 'Art', 'Quiet'].map(cat => (
-            <div key={cat} className="flex-shrink-0 px-4 py-1.5 border border-stone-200 rounded-lg text-xs font-medium text-stone-500 whitespace-nowrap">
+            <div key={cat} className="flex-shrink-0 px-4 py-1.5 border border-stone-200 dark:border-stone-800 rounded-lg text-xs font-medium text-stone-500 dark:text-stone-400 whitespace-nowrap">
                 {cat}
             </div>
         ))}
@@ -29,7 +29,7 @@ export const Explore: React.FC<ExploreProps> = ({ isQuietMode }) => {
         {EXPLORE_POSTS.map((post, i) => (
           <div 
             key={post.id} 
-            className={`relative bg-stone-200 overflow-hidden ${i % 3 === 0 ? 'row-span-2' : 'aspect-square'}`}
+            className={`relative bg-stone-200 dark:bg-stone-900 overflow-hidden ${i % 3 === 0 ? 'row-span-2' : 'aspect-square'}`}
           >
             <img 
                 src={post.imageUrl} 
@@ -45,7 +45,7 @@ export const Explore: React.FC<ExploreProps> = ({ isQuietMode }) => {
         ))}
       </div>
       
-      <div className="py-12 text-center text-xs text-calm-subtext">
+      <div className="py-12 text-center text-xs text-calm-subtext dark:text-stone-600">
         End of curated collection
       </div>
     </div>

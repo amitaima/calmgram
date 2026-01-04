@@ -46,32 +46,34 @@ const App: React.FC = () => {
   };
 
   return (
-    // Main App Container
-    <div className="flex flex-col h-[100dvh] w-full md:max-w-[430px] md:mx-auto bg-calm-bg text-stone-600 md:shadow-2xl md:border-x md:border-stone-100 relative overflow-hidden transition-colors duration-500">
-      
-      {/* Sticky Header */}
-      <div className="flex-shrink-0 z-30 bg-calm-bg/95 backdrop-blur-sm border-b border-stone-50">
-        <Header 
-          currentView={currentView} 
-          onViewChange={setCurrentView}
-          hasNotifications={true}
-          isQuietMode={isQuietMode}
-          onToggleQuietMode={() => setIsQuietMode(!isQuietMode)}
-        />
-      </div>
+    // Main App Container with Dark Mode toggle
+    <div className={`${isQuietMode ? 'dark' : ''} h-full w-full flex justify-center bg-[#F5F5F4] dark:bg-[#0C0A09]`}>
+      <div className="flex flex-col h-[100dvh] w-full md:max-w-[430px] bg-calm-bg dark:bg-stone-950 text-stone-600 dark:text-stone-300 md:shadow-2xl md:border-x md:border-stone-100 dark:md:border-stone-800 relative overflow-hidden transition-colors duration-500">
+        
+        {/* Sticky Header */}
+        <div className="flex-shrink-0 z-30 bg-calm-bg/95 dark:bg-stone-950/95 backdrop-blur-sm border-b border-stone-50 dark:border-stone-800 transition-colors duration-500">
+          <Header 
+            currentView={currentView} 
+            onViewChange={setCurrentView}
+            hasNotifications={true}
+            isQuietMode={isQuietMode}
+            onToggleQuietMode={() => setIsQuietMode(!isQuietMode)}
+          />
+        </div>
 
-      {/* Main Scrollable Content Area */}
-      <main className="flex-1 overflow-y-auto no-scrollbar scroll-smooth relative">
-        {renderContent()}
-      </main>
+        {/* Main Scrollable Content Area */}
+        <main className="flex-1 overflow-y-auto no-scrollbar scroll-smooth relative">
+          {renderContent()}
+        </main>
 
-      {/* Navigation Footer */}
-      <div className="flex-shrink-0 z-30 bg-calm-bg/95 backdrop-blur-md">
-        <BottomNav 
-          currentUserAvatar={CURRENT_USER.avatarUrl} 
-          currentView={currentView}
-          onViewChange={setCurrentView}
-        />
+        {/* Navigation Footer */}
+        <div className="flex-shrink-0 z-30 bg-calm-bg/95 dark:bg-stone-950/95 backdrop-blur-md transition-colors duration-500">
+          <BottomNav 
+            currentUserAvatar={CURRENT_USER.avatarUrl} 
+            currentView={currentView}
+            onViewChange={setCurrentView}
+          />
+        </div>
       </div>
     </div>
   );

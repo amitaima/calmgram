@@ -14,32 +14,32 @@ export const Post: React.FC<PostProps> = ({ post, isQuietMode }) => {
   const shouldDim = isQuietMode && isDimmed;
 
   return (
-    <div className="mb-8 w-full bg-white sm:rounded-3xl overflow-hidden shadow-sm border border-stone-50 transition-all duration-300">
+    <div className="mb-8 w-full bg-white dark:bg-stone-900 sm:rounded-3xl overflow-hidden shadow-sm border border-stone-50 dark:border-stone-800 transition-all duration-300">
       {/* Header */}
       <div className="flex justify-between items-center px-4 py-3">
         <div className="flex items-center gap-3">
           <img 
             src={post.user.avatarUrl} 
             alt={post.user.username} 
-            className="w-9 h-9 rounded-full object-cover border border-stone-100"
+            className="w-9 h-9 rounded-full object-cover border border-stone-100 dark:border-stone-700"
           />
           <div className="flex flex-col leading-none">
-            <span className="text-sm font-semibold text-calm-text">{post.user.username}</span>
+            <span className="text-sm font-semibold text-calm-text dark:text-stone-200">{post.user.username}</span>
             {post.location && (
-              <span className="text-xs text-calm-subtext mt-0.5">{post.location}</span>
+              <span className="text-xs text-calm-subtext dark:text-stone-500 mt-0.5">{post.location}</span>
             )}
           </div>
         </div>
         <div className="flex items-center gap-3">
-            <span className="text-xs text-calm-subtext font-light">{post.timestamp}</span>
-            <button className="text-calm-subtext">
+            <span className="text-xs text-calm-subtext dark:text-stone-500 font-light">{post.timestamp}</span>
+            <button className="text-calm-subtext dark:text-stone-500 hover:text-calm-text dark:hover:text-stone-300">
                 <MoreHorizontal size={20} strokeWidth={1.5} />
             </button>
         </div>
       </div>
 
       {/* Image - Visually segmented, slightly rounded on edges inside the card */}
-      <div className="relative w-full aspect-[4/5] bg-stone-100 overflow-hidden group">
+      <div className="relative w-full aspect-[4/5] bg-stone-100 dark:bg-stone-800 overflow-hidden group">
         <img 
           src={post.imageUrl} 
           alt="Post content" 
@@ -67,17 +67,17 @@ export const Post: React.FC<PostProps> = ({ post, isQuietMode }) => {
       {!isQuietMode && (
         <div className="px-4 pt-3 pb-2 flex justify-between items-center animate-in fade-in duration-300">
           <div className="flex gap-4">
-            <button className="text-calm-icon hover:text-calm-text transition-colors duration-200">
+            <button className="text-calm-icon dark:text-stone-400 hover:text-calm-text dark:hover:text-stone-200 transition-colors duration-200">
               <Heart size={26} strokeWidth={1.5} />
             </button>
-            <button className="text-calm-icon hover:text-calm-text transition-colors duration-200">
+            <button className="text-calm-icon dark:text-stone-400 hover:text-calm-text dark:hover:text-stone-200 transition-colors duration-200">
               <MessageCircle size={26} strokeWidth={1.5} className="-rotate-90" />
             </button>
-            <button className="text-calm-icon hover:text-calm-text transition-colors duration-200">
+            <button className="text-calm-icon dark:text-stone-400 hover:text-calm-text dark:hover:text-stone-200 transition-colors duration-200">
               <Share size={26} strokeWidth={1.5} />
             </button>
           </div>
-          <button className="text-calm-icon hover:text-calm-text transition-colors duration-200">
+          <button className="text-calm-icon dark:text-stone-400 hover:text-calm-text dark:hover:text-stone-200 transition-colors duration-200">
             <Bookmark size={26} strokeWidth={1.5} />
           </button>
         </div>
@@ -87,19 +87,19 @@ export const Post: React.FC<PostProps> = ({ post, isQuietMode }) => {
       <div className={`px-4 pb-5 ${isQuietMode ? 'pt-4' : ''}`}>
         {/* Hidden likes indicator */}
         {!isQuietMode && (
-          <div className="text-xs text-calm-subtext mb-2 italic">
+          <div className="text-xs text-calm-subtext dark:text-stone-500 mb-2 italic">
               Likes hidden
           </div>
         )}
         
-        <div className="text-[15px] leading-relaxed text-calm-text">
-          <span className="font-semibold mr-2">{post.user.username}</span>
+        <div className="text-[15px] leading-relaxed text-calm-text dark:text-stone-300">
+          <span className="font-semibold mr-2 text-stone-900 dark:text-stone-100">{post.user.username}</span>
           {post.caption}
         </div>
         
         {/* No comment count */}
         {!isQuietMode && (
-          <div className="mt-2 text-xs text-calm-subtext cursor-pointer hover:text-calm-text transition-colors">
+          <div className="mt-2 text-xs text-calm-subtext dark:text-stone-500 cursor-pointer hover:text-calm-text dark:hover:text-stone-300 transition-colors">
               Add a calm comment...
           </div>
         )}

@@ -1,5 +1,6 @@
 {
   "name": "CalmGram",
   "description": "A high-fidelity mockup of a non-addictive, minimal Instagram interface designed for ethical UX research.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "stack": "vite"
 }
