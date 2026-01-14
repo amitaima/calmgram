@@ -10,7 +10,7 @@ import { POSTS, STORIES, CURRENT_USER } from './data';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
-  const [isQuietMode, setIsQuietMode] = useState(true);
+  const [isQuietMode, setIsQuietMode] = useState(false);
 
   const renderContent = () => {
     switch (currentView) {

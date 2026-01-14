@@ -8,7 +8,9 @@ export interface User {
 export interface Post {
   id: string;
   user: User;
-  imageUrl: string;
+  type: 'image' | 'video';
+  imageUrl: string; // Used for video poster/thumbnail as well
+  videoUrl?: string;
   caption: string;
   timestamp: string;
   location?: string;

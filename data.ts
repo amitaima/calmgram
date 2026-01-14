@@ -20,7 +20,9 @@ export const POSTS: Post[] = [
   {
     id: 'p1',
     user: { id: 'u2', username: 'nature_walks', avatarUrl: 'https://picsum.photos/id/1015/200/200' },
-    imageUrl: 'https://picsum.photos/id/28/800/1000',
+    type: 'video',
+    imageUrl: 'https://images.pexels.com/videos/4770464/free-video-4770464.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
     caption: 'Morning silence in the valley. The air was crisp and the world felt still.',
     timestamp: '2h ago',
     location: 'Yosemite Valley'
@@ -28,6 +30,7 @@ export const POSTS: Post[] = [
   {
     id: 'p2',
     user: { id: 'u3', username: 'archi_daily', avatarUrl: 'https://picsum.photos/id/1018/200/200' },
+    type: 'image',
     imageUrl: 'https://picsum.photos/id/48/800/800',
     caption: 'Forms and shadows. Less is always more.',
     timestamp: '5h ago'
@@ -35,6 +38,7 @@ export const POSTS: Post[] = [
   {
     id: 'p3',
     user: { id: 'u5', username: 'clay_ceramics', avatarUrl: 'https://picsum.photos/id/1027/200/200' },
+    type: 'image',
     imageUrl: 'https://picsum.photos/id/112/800/1000',
     caption: 'Process over outcome. Enjoying the texture of the raw earth today.',
     timestamp: '8h ago',
@@ -43,9 +47,35 @@ export const POSTS: Post[] = [
   {
     id: 'p4',
     user: { id: 'u1', username: 'elara_studios', avatarUrl: 'https://picsum.photos/id/1011/200/200' },
+    type: 'image',
     imageUrl: 'https://picsum.photos/id/250/800/600',
     caption: 'Capturing moments of pause.',
     timestamp: '12h ago'
+  },
+  {
+    id: 'p5',
+    user: { id: 'u4', username: 'minimal_brew', avatarUrl: 'https://picsum.photos/id/1025/200/200' },
+    type: 'video',
+    imageUrl: 'https://images.pexels.com/videos/3205634/free-video-3205634.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    caption: 'The ritual of the morning pour. ☕',
+    timestamp: '14h ago'
+  },
+  {
+    id: 'p6',
+    user: { id: 'u6', username: 'soft_textiles', avatarUrl: 'https://picsum.photos/id/1035/200/200' },
+    type: 'image',
+    imageUrl: 'https://picsum.photos/id/360/800/800',
+    caption: 'Linen textures in the afternoon light.',
+    timestamp: '1d ago'
+  },
+  {
+    id: 'p7',
+    user: { id: 'u7', username: 'forest_dweller', avatarUrl: 'https://picsum.photos/id/1040/200/200' },
+    type: 'image',
+    imageUrl: 'https://picsum.photos/id/400/800/1000',
+    caption: 'Canopy dreams.',
+    timestamp: '1d ago'
   }
 ];
 

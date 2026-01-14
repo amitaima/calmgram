@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
         >
            <Heart size={24} strokeWidth={isActivity ? 2.5 : 1.5} fill={isActivity ? 'currentColor' : 'none'} />
            {hasNotifications && !isActivity && (
-             <span className="absolute top-0 right-0 w-2 h-2 bg-orange-300 rounded-full border border-calm-bg dark:border-stone-900 ring-2 ring-calm-bg dark:ring-stone-900"></span>
+             <span className={`absolute top-0 right-0 w-2 h-2 rounded-full border border-calm-bg dark:border-stone-900 ring-2 ring-calm-bg dark:ring-stone-900 transition-colors duration-500 ${isQuietMode ? 'bg-stone-400 dark:bg-stone-600' : 'bg-orange-300'}`}></span>
            )}
         </button>
         

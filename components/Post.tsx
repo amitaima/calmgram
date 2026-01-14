@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Post as PostType } from '../types';
-import { Heart, MessageCircle, Share, Bookmark, MoreHorizontal, Sun, Moon } from 'lucide-react';
+import { Heart, MessageCircle, Share, Bookmark, MoreHorizontal, Sun, Moon, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
 interface PostProps {
   post: PostType;
@@ -9,9 +9,53 @@ interface PostProps {
 
 export const Post: React.FC<PostProps> = ({ post, isQuietMode }) => {
   const [isDimmed, setIsDimmed] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
   
   // Calculate if the image should actually be dimmed based on global mode and local toggle
+  // Videos are not dimmed by default in the same way, but let's keep consistent styling
   const shouldDim = isQuietMode && isDimmed;
+
+  useEffect(() => {
+    // When Quiet Mode changes, handle video playback behavior
+    if (post.type === 'video' && videoRef.current) {
+      if (isQuietMode) {
+        // In Calm Mode, stop automatic playback
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        // In Normal Mode, try to autoplay (muted)
+        videoRef.current.muted = true;
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => setIsPlaying(true))
+            .catch(() => setIsPlaying(false));
+        }
+      }
+    }
+  }, [isQuietMode, post.type]);
+
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
 
   return (
     <div className="mb-8 w-full bg-white dark:bg-stone-900 sm:rounded-3xl overflow-hidden shadow-sm border border-stone-50 dark:border-stone-800 transition-all duration-300">
@@ -38,25 +82,60 @@ export const Post: React.FC<PostProps> = ({ post, isQuietMode }) => {
         </div>
       </div>
 
-      {/* Image - Visually segmented, slightly rounded on edges inside the card */}
-      <div className="relative w-full aspect-[4/5] bg-stone-100 dark:bg-stone-800 overflow-hidden group">
-        <img 
-          src={post.imageUrl} 
-          alt="Post content" 
-          className={`w-full h-full object-cover transition-all duration-500 ease-out ${shouldDim ? 'brightness-[0.7] saturate-[0.8] contrast-[0.95]' : 'brightness-100 saturate-100 contrast-100'}`}
-          loading="lazy"
-        />
+      {/* Content Area (Image or Video) */}
+      <div 
+        className="relative w-full aspect-[4/5] bg-stone-100 dark:bg-stone-800 overflow-hidden group cursor-pointer"
+        onClick={post.type === 'video' ? togglePlay : undefined}
+      >
+        {post.type === 'video' ? (
+           <>
+            <video
+              ref={videoRef}
+              src={post.videoUrl}
+              poster={post.imageUrl}
+              loop
+              playsInline
+              muted={isMuted}
+              className={`w-full h-full object-cover transition-all duration-500 ease-out ${shouldDim ? 'brightness-[0.7] saturate-[0.8] contrast-[0.95]' : 'brightness-100 saturate-100 contrast-100'}`}
+            />
+            {/* Play Button Overlay (Visible if paused or in calm mode initially) */}
+            {(!isPlaying || isQuietMode) && (
+              <div className={`absolute inset-0 flex items-center justify-center bg-black/10 transition-opacity duration-300 ${isPlaying && !isQuietMode ? 'opacity-0' : 'opacity-100'}`}>
+                <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/30 shadow-lg">
+                  {isPlaying ? <Pause size={32} fill="currentColor" /> : <Play size={32} fill="currentColor" className="ml-1" />}
+                </div>
+              </div>
+            )}
+            
+            {/* Mute toggle - bottom right (only visible when playing) */}
+            {isPlaying && (
+              <button 
+                onClick={toggleMute}
+                className="absolute bottom-3 right-3 w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-white/90 transition-all duration-200 z-10"
+              >
+                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              </button>
+            )}
+           </>
+        ) : (
+          <img 
+            src={post.imageUrl} 
+            alt="Post content" 
+            className={`w-full h-full object-cover transition-all duration-500 ease-out ${shouldDim ? 'brightness-[0.7] saturate-[0.8] contrast-[0.95]' : 'brightness-100 saturate-100 contrast-100'}`}
+            loading="lazy"
+          />
+        )}
         
-        {/* Dim/Bright Toggle Button - Only visible in Quiet Mode */}
+        {/* Dim/Bright Toggle Button - Only visible in Quiet Mode for images, or videos if we want consistency */}
         {isQuietMode && (
           <button 
               onClick={(e) => {
                   e.stopPropagation();
                   setIsDimmed(!isDimmed);
               }}
-              className="absolute bottom-3 right-3 w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-white/90 transition-all duration-200 z-10"
-              aria-label={isDimmed ? "Brighten image" : "Dim image"}
-              title={isDimmed ? "Show full brightness" : "Dim image"}
+              className={`absolute bottom-3 ${post.type === 'video' && isPlaying ? 'right-12' : 'right-3'} w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-white/90 transition-all duration-200 z-10`}
+              aria-label={isDimmed ? "Brighten content" : "Dim content"}
+              title={isDimmed ? "Show full brightness" : "Dim content"}
           >
               {isDimmed ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
           </button>
